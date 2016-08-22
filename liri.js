@@ -22,12 +22,12 @@ switch(action) {
 		doIt();
 		break;
 	default:
-		console.log("Enter my-tweets, spotify-this-song, movie-this, or do-what-it-says");
+		console.log("Enter 'my-tweets', 'spotify-this-song', 'movie-this', or 'do-what-it-says'");
 }
 
 
 //my-tweets
-var twitter = function() {
+function twitter() {
 
 	console.log("In Twitter");
 
@@ -47,7 +47,7 @@ var twitter = function() {
 
 }
 //spotify-this-song
-var spotify = function() {
+function spotify() {
 
 	console.log("In Spotify");
 
@@ -75,7 +75,7 @@ var spotify = function() {
 
 }
 //movie-this
-var movie = function() {
+function movie() {
 
 	console.log("In Movie");
 
@@ -88,9 +88,13 @@ var movie = function() {
 
 	var request = require('request');
 
-	var movieName = parameter.split(' ').join('+');
+	var movieName = parameter.split(" ").join('+');
 
-	var queryUrl = 'http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&r=json';
+	console.log(movieName);
+
+	var queryUrl = 'http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&tomatoes=true&r=json';
+
+	console.log(queryUrl);
 
 	request(queryUrl, function (error, response, data) {
 
@@ -102,17 +106,14 @@ var movie = function() {
 		if (!error && response.statusCode == 200) {
 
 			var grabData = JSON.parse(data);
-			console.log(grabData.Title + " (" + grabData.Year + "), Rated: " + grabData.Rated + grabData.Country + grabData.Language + grabData.Plot + grabData.Actors)
-
-			// Rotten Tomatoes Rating?
-			// Rotten Tomatoes URL?
+			console.log(grabData.Title + " (" + grabData.Year + "), Rated: " + grabData.Rated + grabData.Country + grabData.Language + grabData.Plot + grabData.Actors + grabData.tomatoUserMeter + grabData.tomatoURL);
 		}
 	});
 
 }
 
 //do-what-it-says
-var doIt = function() {
+function doIt() {
 
 	Console.log("In doIt");
 
