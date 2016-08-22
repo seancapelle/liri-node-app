@@ -33,16 +33,31 @@ function twitter() {
 
 	var twitter = require('twitter');
 
-		var params = {screen_name: 'nodejs'};
-		client.get('statuses/user_timeline', params, function(error, tweets, response) {
-	 		  if (error) {
-		        console.log('Error occurred: ' + error);
-		        return;
-		    }
-	 		 if (!error) {
-			    
-				console.log(tweets);
-			}
+// var client = new twitter({
+//   consumer_key: 'PiPLanWPfSfRghwytisGfqRSu',
+//   consumer_secret: 'PP21bOC1NLA4vAFng2w0DPG4JjBu2Ywft1VPqgbfyJtZaREkvD',
+//   access_token_key: '129977333-ImmgdShshLqm2zocDtbTCykVp5F4Z4Ik0eF7h1Sl',
+//   access_token_secret: 'Yqft3N55rKB6Ub32tx4g70OFppdvjyD6MFfJEPh5YEw7O',
+// });
+
+
+	// var client = exports.twitterkeys;
+
+	var params = {screen_name: '@seancapelle', count: 10};
+
+	client.get('statuses/user_timeline', params, function(error, tweets, response) {
+	 	if (error) {
+		    console.log('Error occurred: ' + error);
+		    return;
+		}
+	 	
+	 	if (!error) {
+		
+			//Display ten current tweets, numbered 1-10
+			for (var i = 0; i < tweets.length; i++) {
+				console.log((parseInt([i]) + 1) + ' ' + tweets[i].text);
+			}    
+		}
 	});
 
 }
@@ -79,13 +94,6 @@ function movie() {
 
 	console.log("In Movie");
 
-		// var request = require('request');
-		// request('http://www.google.com', function (error, response, body) {
-		//   if (!error && response.statusCode == 200) {
-		//     console.log(body) // Show the HTML for the Google homepage. 
-		//   }
-		// })
-
 	var request = require('request');
 
 	var movieName = parameter.split(" ").join('+');
@@ -106,7 +114,8 @@ function movie() {
 		if (!error && response.statusCode == 200) {
 
 			var grabData = JSON.parse(data);
-			console.log(grabData.Title + " (" + grabData.Year + "), Rated: " + grabData.Rated + grabData.Country + grabData.Language + grabData.Plot + grabData.Actors + grabData.tomatoUserMeter + grabData.tomatoURL);
+			console.log(grabData.Title + " (" + grabData.Year + "), Rated: " + grabData.Rated + ". Filmed in: " + grabData.Country + ". Language: " + grabData.Language + 
+				". Plot: " + grabData.Plot + " Starring: " + grabData.Actors + ". Rotten Tomatoes Rating: " + grabData.tomatoUserMeter + ", Rotten Tomatoes URL: " + grabData.tomatoURL);
 		}
 	});
 
@@ -115,7 +124,7 @@ function movie() {
 //do-what-it-says
 function doIt() {
 
-	Console.log("In doIt");
+	console.log("In doIt");
 
 	var fs = require('fs');
 
@@ -125,7 +134,8 @@ function doIt() {
 	//Print the contents of data
 	console.log(data);
 
-	//spotify(data);?
+	//TURN INTO ACTION
+
 	})
 
 }
