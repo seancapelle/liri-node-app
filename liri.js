@@ -11,7 +11,7 @@ switch(BLANK) {
 		movie();
 		break
 	case do-what-it-says:
-		request();
+		doIt();
 		break;
 	default:
 		console.log("default");
@@ -20,7 +20,43 @@ switch(BLANK) {
 
 
 
+var twitter = function() {
 
+}
+
+var spotify = function() {
+
+}
+
+var movie = function() {
+
+	var request = require('request');
+
+	var movieName = process.argv[3];
+
+	var queryUrl = 'http://www.omdbapi.com/?t=' + movieName +'&y=&plot=short&r=json';
+
+	request(queryUrl, function (error, response, data) {
+
+		// If the request was successful...
+		if (!error && response.statusCode == 200) {
+
+			// Then log the body from the site!
+
+			var grabData = JSON.parse(data);
+			console.log(grabData.Title + " (" + grabData.Year + "), Rated: " + grabData.Rated + grabData.Country + grabData.Language + grabData.Plot + grabData.Actors)
+
+// Rotten Tomatoes Rating?
+// Rotten Tomatoes URL?
+		}
+	});
+
+}
+
+
+var doIt = function() {
+
+}
 //Use Case for the requests on step 5
 
 
@@ -45,15 +81,14 @@ switch(BLANK) {
 
 // Include the request npm package (Don't forget to run "npm install request" in this folder first!)
 // ...
-var request = require('request');
+
 
 // Grab or assemble the movie name  and store it in a variable called "movieName"
 // ...
-var movieName = process.argv[2];
+
 
 
 // Then run a request to the OMDB API with the movie specified 
-var queryUrl = 'http://www.omdbapi.com/?t=' + movieName +'&y=&plot=short&r=json';
 
 // This line is just to help us debug against the actual URL.  
 console.log(queryUrl);
@@ -61,17 +96,7 @@ console.log(queryUrl);
 
 // Then create a request to the queryUrl
 // ...
-request(queryUrl, function (error, response, data) {
 
-	// If the request was successful...
-	if (!error && response.statusCode == 200) {
-
-		// Then log the body from the site!
-
-		var grabData = JSON.parse(data);
-		console.log(grabData.Title + " (" + grabData.Rated + "), Released in: " + grabData.Year)
-	}
-});
 	
 	// If the request is successful
 	// ... 
