@@ -1,11 +1,12 @@
 //Grab the keys.js info
-var keys = require('./keys')
+var keys = require('./keys');
 
-//Take user input to determine what to do
+//Take user input for action
 var action = process.argv[2];
 
-//User input
-var parameter = process.argv[3];
+//User input for movie-this and spotify-this-song
+var parameter = process.argv[3]
+// .split(" ").join('+');
 
 //Switch to determine action to take
 switch(action) {
@@ -29,53 +30,60 @@ switch(action) {
 //my-tweets
 function twitter() {
 
-	console.log("In Twitter");
-
+	//Get twitter node package
 	var twitter = require('twitter');
 
-// var client = new twitter({
-//   consumer_key: 'PiPLanWPfSfRghwytisGfqRSu',
-//   consumer_secret: 'PP21bOC1NLA4vAFng2w0DPG4JjBu2Ywft1VPqgbfyJtZaREkvD',
-//   access_token_key: '129977333-ImmgdShshLqm2zocDtbTCykVp5F4Z4Ik0eF7h1Sl',
-//   access_token_secret: 'Yqft3N55rKB6Ub32tx4g70OFppdvjyD6MFfJEPh5YEw7O',
-// });
+	var client = new twitter({
+	  consumer_key: 'PiPLanWPfSfRghwytisGfqRSu',
+	  consumer_secret: 'PP21bOC1NLA4vAFng2w0DPG4JjBu2Ywft1VPqgbfyJtZaREkvD',
+	  access_token_key: '129977333-ImmgdShshLqm2zocDtbTCykVp5F4Z4Ik0eF7h1Sl',
+	  access_token_secret: 'Yqft3N55rKB6Ub32tx4g70OFppdvjyD6MFfJEPh5YEw7O',
+	});
 
 
-	// var client = exports.twitterkeys;
-
+	//Set screen_name and number of tweets to pull
 	var params = {screen_name: '@seancapelle', count: 10};
 
-	client.get('statuses/user_timeline', params, function(error, tweets, response) {
+	//Get timeline info
+	client.get('statuses/user_timeline', params, function(error, tweets) {
+	 	
+	 	//If error occurs
 	 	if (error) {
 		    console.log('Error occurred: ' + error);
 		    return;
 		}
 	 	
+	 	//If no error
 	 	if (!error) {
 		
 			//Display ten current tweets, numbered 1-10
 			for (var i = 0; i < tweets.length; i++) {
-				console.log((parseInt([i]) + 1) + ' ' + tweets[i].text);
+				console.log((parseInt([i]) + 1) + '. ' + tweets[i].text);
 			}    
 		}
 	});
-
+//NEED TO PULL USER INFO FROM KEYS.JS!!!
 }
 //spotify-this-song
 function spotify() {
 
 	console.log("In Spotify");
+	// console.log(parameter);
 
+	//Get spotify node package
 	var spotify = require('spotify');
 	 
 	spotify.search({ type: 'track', query: parameter}, function(error, data) {
+	    //If error occurs
 	    if (error) {
 	        console.log('Error occurred: ' + error);
 	        return;
 	    }
-	 
+	 	
+	 	//If no error
 		if (!error) {
-			console.log(songName);
+			console.log(data);
+			// console.log(data.items.artists.name);
 
 			// Artist(s)
 			// The song's name
@@ -94,31 +102,35 @@ function movie() {
 
 	console.log("In Movie");
 
+	//Get request package
 	var request = require('request');
 
-	var movieName = parameter.split(" ").join('+');
+	var movieName = parameter;
 
 	console.log(movieName);
 
+	//Create URL based on movieName
 	var queryUrl = 'http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&tomatoes=true&r=json';
 
 	console.log(queryUrl);
 
 	request(queryUrl, function (error, response, data) {
 
+		//If error occurs
 		 if (error) {
 	        console.log('Error occurred: ' + error);
 	        return;
 	    }
-		// If the request was successful...
+		//If no error
 		if (!error && response.statusCode == 200) {
 
+			//Parse the data
 			var grabData = JSON.parse(data);
 			console.log(grabData.Title + " (" + grabData.Year + "), Rated: " + grabData.Rated + ". Filmed in: " + grabData.Country + ". Language: " + grabData.Language + 
 				". Plot: " + grabData.Plot + " Starring: " + grabData.Actors + ". Rotten Tomatoes Rating: " + grabData.tomatoUserMeter + ", Rotten Tomatoes URL: " + grabData.tomatoURL);
 		}
 	});
-
+//ADD + BETWEEN WORDS IN MOVIE TITLE!!!
 }
 
 //do-what-it-says
