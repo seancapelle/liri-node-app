@@ -76,8 +76,14 @@ function spotify() {
 	 	
 	 	//If no error
 		if (!error) {
-			// console.log(JSON.stringify(data));
-			console.log(data.tracks);
+			
+			//Artist name 
+			console.log(data.tracks.items[0].artists[0].name);
+			//Album name
+			console.log(data.tracks.items[0].album.name);
+			
+			console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+			console.log(data.tracks.items[0].album);
 
 			// Artist(s)
 			// The song's name
@@ -99,7 +105,14 @@ function movie() {
 	//Get request package
 	var request = require('request');
 
-	var movieName = parameter;
+	if(parameter == null) {
+		
+		var movieName = "Mr. Nobody";
+	}
+	else {
+
+		var movieName = parameter;
+	}
 
 	console.log(movieName);
 
