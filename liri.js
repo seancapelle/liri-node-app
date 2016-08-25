@@ -1,6 +1,3 @@
-//Grab the keys.js info
-var keys = require('./keys');
-
 //Take user input for action
 var action = process.argv[2];
 
@@ -26,20 +23,17 @@ switch(action) {
 		console.log("Enter 'my-tweets', 'spotify-this-song', 'movie-this', or 'do-what-it-says'");
 }
 
-
 //my-tweets
 function twitter() {
 
 	//Get twitter node package
 	var twitter = require('twitter');
 
-	var client = new twitter({
-	  consumer_key: 'PiPLanWPfSfRghwytisGfqRSu',
-	  consumer_secret: 'PP21bOC1NLA4vAFng2w0DPG4JjBu2Ywft1VPqgbfyJtZaREkvD',
-	  access_token_key: '129977333-ImmgdShshLqm2zocDtbTCykVp5F4Z4Ik0eF7h1Sl',
-	  access_token_secret: 'Yqft3N55rKB6Ub32tx4g70OFppdvjyD6MFfJEPh5YEw7O',
-	});
+	//Grab the keys.js info
+	var twitterKeys = require('./keys.js').twitterKeys;
 
+	//Set client to the grabbed key
+	var client = new twitter(twitterKeys);
 
 	//Set screen_name and number of tweets to pull
 	var params = {screen_name: '@seancapelle', count: 10};
@@ -62,7 +56,7 @@ function twitter() {
 			}    
 		}
 	});
-//NEED TO PULL USER INFO FROM KEYS.JS!!!
+
 }
 //spotify-this-song
 function spotify() {
@@ -82,8 +76,8 @@ function spotify() {
 	 	
 	 	//If no error
 		if (!error) {
-			console.log(data);
-			// console.log(data.items.artists.name);
+			// console.log(JSON.stringify(data));
+			console.log(data.tracks);
 
 			// Artist(s)
 			// The song's name
