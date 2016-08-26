@@ -78,19 +78,26 @@ function spotify() {
 		if (!error) {
 			
 			//Artist name 
-			console.log(data.tracks.items[0].artists[0].name);
+			var artist = data.tracks.items[0].artists[0].name;
+
+			//Song name
+			var song = song;
+
+			//Spotify preview link
+			var link = data.tracks.items[0].external_urls.spotify;
+			
 			//Album name
-			console.log(data.tracks.items[0].album.name);
+			var album = data.tracks.items[0].album.name
+			
 			
 			console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-			console.log(data.tracks.items[0].album);
+			console.log(data.tracks.items[0]);
 
-			// Artist(s)
-			// The song's name
-			// A preview link of the song from Spotify
-			// The album that the song is from
+			console.log(artist);
+			console.log(album);
+			console.log(link);
+			
 			// if no song is provided then your program will default to
-
 			// "The Sign" by Ace of Base
 
 		}
