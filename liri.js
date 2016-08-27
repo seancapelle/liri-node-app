@@ -2,8 +2,7 @@
 var action = process.argv[2];
 
 //User input for movie-this and spotify-this-song
-var parameter = process.argv[3]
-// .split(" ").join('+');
+var parameter = process.argv[3];
 
 //Switch to determine action to take
 function doAction(action){
@@ -61,14 +60,11 @@ function twitter() {
 }
 //spotify-this-song
 function spotify() {
-
-	console.log("In Spotify");
 	
 	if (parameter == null) {
 
 		//If no song from the user, default 'the sign'
 		parameter = 'the sign';
-		console.log(parameter);
 	}
 
 	//Get spotify node package
@@ -96,8 +92,7 @@ function spotify() {
 			//Album name
 			var album = data.tracks.items[0].album.name
 			
-			// console.log(data.tracks.items[0]);
-
+			//Display all the mess. ALL. THE. MESS.
 			console.log(song + ", performed by " + artist + ", on the album " + album + ". Spotify: " + link);
 			
 			}
@@ -108,27 +103,24 @@ function spotify() {
 //movie-this
 function movie() {
 
-	console.log("In Movie");
-
 	//Get request package
 	var request = require('request');
 
 	if(parameter == null) {
 		
+		//If user doesn't provide movie title
 		var movieName = "Mr. Nobody";
 	}
 	else {
 
+		//Assign user input to variable
 		var movieName = parameter;
 	}
-
-	console.log(movieName);
 
 	//Create URL based on movieName
 	var queryUrl = 'http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&tomatoes=true&r=json';
 
-	console.log(queryUrl);
-
+	//Request
 	request(queryUrl, function (error, response, data) {
 
 		//If error occurs
@@ -145,14 +137,12 @@ function movie() {
 				". Plot: " + grabData.Plot + " Starring: " + grabData.Actors + ". Rotten Tomatoes Rating: " + grabData.tomatoUserMeter + ", Rotten Tomatoes URL: " + grabData.tomatoURL);
 		}
 	});
-//ADD + BETWEEN WORDS IN MOVIE TITLE!!!
 }
 
 //do-what-it-says
 function doIt() {
 
-	console.log("In doIt");
-
+	//Get fs
 	var fs = require('fs');
 
 	//Stores the contents of the reading inside the var "data"
