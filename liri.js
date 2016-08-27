@@ -6,23 +6,24 @@ var parameter = process.argv[3]
 // .split(" ").join('+');
 
 //Switch to determine action to take
-switch(action) {
-	case 'my-tweets':
-		twitter();
-		break;
-	case 'spotify-this-song':
-		spotify();
-		break;
-	case 'movie-this':
-		movie();
-		break;
-	case 'do-what-it-says':
-		doIt();
-		break;
-	default:
-		console.log("Enter 'my-tweets', 'spotify-this-song', 'movie-this', or 'do-what-it-says'");
+function doAction(action){
+	switch(action) {
+		case 'my-tweets':
+			twitter();
+			break;
+		case 'spotify-this-song':
+			spotify();
+			break;
+		case 'movie-this':
+			movie();
+			break;
+		case 'do-what-it-says':
+			doIt();
+			break;
+		default:
+			console.log("Enter 'my-tweets', 'spotify-this-song', 'movie-this', or 'do-what-it-says'");
+	}
 }
-
 //my-tweets
 function twitter() {
 
@@ -62,7 +63,13 @@ function twitter() {
 function spotify() {
 
 	console.log("In Spotify");
-	// console.log(parameter);
+	
+	if (parameter == null) {
+
+		//If no song from the user, default 'the sign'
+		parameter = 'the sign';
+		console.log(parameter);
+	}
 
 	//Get spotify node package
 	var spotify = require('spotify');
@@ -76,12 +83,12 @@ function spotify() {
 	 	
 	 	//If no error
 		if (!error) {
-			
+
 			//Artist name 
 			var artist = data.tracks.items[0].artists[0].name;
 
 			//Song name
-			var song = song;
+			var song = data.tracks.items[0].name;
 
 			//Spotify preview link
 			var link = data.tracks.items[0].external_urls.spotify;
@@ -89,18 +96,12 @@ function spotify() {
 			//Album name
 			var album = data.tracks.items[0].album.name
 			
-			
-			console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-			console.log(data.tracks.items[0]);
+			// console.log(data.tracks.items[0]);
 
-			console.log(artist);
-			console.log(album);
-			console.log(link);
+			console.log(song + ", performed by " + artist + ", on the album " + album + ". Spotify: " + link);
 			
-			// if no song is provided then your program will default to
-			// "The Sign" by Ace of Base
-
-		}
+			}
+			
 	});
 
 }
@@ -156,40 +157,18 @@ function doIt() {
 
 	//Stores the contents of the reading inside the var "data"
 	fs.readFile("random.txt", "utf8", function(error, data) {
+	var split = data.split(',');
 
-	//Print the contents of data
-	console.log(data);
+	//assign to user input
+	action = split[0];
+	parameter = split[1];
 
-	//TURN INTO ACTION
+	doAction(action);
 
 	})
 
 }
 
-
-//NOTES
-//Use Case for the requests on step 5
-
-
-// function movieThis(){
-// 	var url = '';
-
-// 	request(url, function(error, response, body)) {
-
-// 		if(!error && response.statusCode == 200) {
-// 			console.log("Movie");
-// 			JSON.parse
-// 		}
-// 	}
-// }
-
-// INSTRUCTIONS:
-// Level 1: Take any movie with a word title (ex: Cinderella) as a Node argument and retrieve the year it was created
-// Level 2 (More Challenging): Take a move with multiple words (ex: Forrest Gump) as a Node argument and retrive the year it was created. 
-// ----------------------------------------------------------------------------------
-
-// ... are the places where you need to code!
-
-// Include the request npm package (Don't forget to run "npm install request" in this folder first!)
-// ...
+//Start the process
+doAction(action);
 
